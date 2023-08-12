@@ -46,9 +46,9 @@ pub async fn websocket(stream: WebSocket) {
 
     // Loop until a text message is found.
     while let Some(Ok(message)) = receiver.next().await {
-        if let Message::Text(game) = message {
+        if let Message::Text(id) = message {
             // If not empty we want to quit the loop else we want to quit function.
-            if !game.is_empty() {
+            if !id.is_empty() {
                 break;
             } else {
                 let _ = sender

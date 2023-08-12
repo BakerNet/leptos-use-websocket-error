@@ -14,7 +14,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 // TODO - new game & join game suspense
                 <Route path="" view=|cx| view!{cx, <A href="test">Start websocket</A>} />
                 <Route path="/:id" view=|cx| view!{ cx,
-                    <Game />
+                    <WebsocketPage />
                 } />
             </Routes>
             </main>
@@ -23,9 +23,9 @@ pub fn App(cx: Scope) -> impl IntoView {
     }
 }
 #[component]
-pub fn Game(cx: Scope) -> impl IntoView {
+pub fn WebsocketPage(cx: Scope) -> impl IntoView {
     let params = use_params_map(cx);
-    let game_id = move || params.with(|params| params.get("id").cloned().unwrap_or_default());
+    let id = move || params.with(|params| params.get("id").cloned().unwrap_or_default());
 
     let (display_msg, set_display_msg) = create_signal::<Option<String>>(cx, None);
 
@@ -39,7 +39,7 @@ pub fn Game(cx: Scope) -> impl IntoView {
 
     create_effect(cx, move |_| {
         if ready_state() == UseWebSocketReadyState::Open {
-            send(game_id());
+            send(id());
         }
     });
 
