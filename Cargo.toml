@@ -1,0 +1,24 @@
+[workspace]
+resolver = "2"
+members = [
+  # core
+  "frontend",
+  "server",
+
+  # integrations
+
+  # libraries
+]
+exclude = []
+
+[workspace.package]
+version = "0.1.0"
+
+[workspace.dependencies]
+server = { path = "./server", version = "0.1.0" }
+frontend = { path = "./frontend", version = "0.1.0" }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 'z'
